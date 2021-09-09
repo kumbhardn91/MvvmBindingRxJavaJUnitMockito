@@ -5,7 +5,7 @@ import com.example.exercisetwo.retroconnection.RetroInstance
 import com.example.exercisetwo.retroconnection.RetroService
 import io.reactivex.Observable
 
-object DataRepository {
+class DataRepository {
 
     fun getCountryInfo(): Observable<CountryModel> {
 

@@ -14,10 +14,11 @@ import io.reactivex.schedulers.Schedulers
 class CountryViewModel : ViewModel() {
 
     var progressDialog: SingleLiveEvent<Boolean>? = SingleLiveEvent()
-    var countryLiveData: MutableLiveData<CountryModel> = MutableLiveData()
+    var countryLiveData = MutableLiveData<CountryModel>()
+    private var dataRepository = DataRepository()
 
     fun getCountryData() {
-        DataRepository.getCountryInfo()
+        dataRepository.getCountryInfo()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(getDataListObserverRx())
@@ -28,7 +29,6 @@ class CountryViewModel : ViewModel() {
 
             override fun onComplete() {
                 progressDialog?.value = false
-                //hide progressbar
             }
 
             override fun onError(e: Throwable) {
@@ -44,7 +44,6 @@ class CountryViewModel : ViewModel() {
 
             override fun onSubscribe(d: Disposable) {
                 progressDialog?.value = true
-                //start showing progressbar
             }
         }
     }
