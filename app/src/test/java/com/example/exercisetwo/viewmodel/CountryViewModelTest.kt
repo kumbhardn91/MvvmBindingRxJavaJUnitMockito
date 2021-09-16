@@ -5,11 +5,11 @@ import com.example.exercisetwo.model.CountryModel
 import com.example.exercisetwo.model.DataRows
 import com.example.exercisetwo.repository.DataRepository
 import io.reactivex.Observable
-import org.junit.Before
-import org.junit.Test
-
 import org.junit.Assert.*
+import org.junit.Before
+import org.junit.ClassRule
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -19,8 +19,15 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CountryViewModelTest {
 
-    @get:Rule
+    @Rule
+    @JvmField
     var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    companion object {
+        @ClassRule
+        @JvmField
+        val schedulers = RxImmediateSchedulerRule()
+    }
 
     @Mock
     private lateinit var countryViewModel: CountryViewModel
@@ -56,8 +63,8 @@ class CountryViewModelTest {
 
         countryViewModel.getCountryData()
 
-        val countryViewModel = countryViewModel.countryLiveData.value
-        assertEquals(countryViewModel?.rows?.get(0)?.title, "Beavers")
+        val countryViewModels = countryViewModel.countryLiveData.value
+        assertEquals(countryViewModels?.rows?.get(0)?.title, "Beavers")
 
     }
 
@@ -73,7 +80,4 @@ class CountryViewModelTest {
         assertEquals(countryViewModel?.rows?.get(0)?.title, "Beavers")
     }
 
-    @Test
-    fun getCountryData() {
-    }
 }

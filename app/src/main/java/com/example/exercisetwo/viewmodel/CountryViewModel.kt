@@ -29,20 +29,22 @@ class CountryViewModel : ViewModel() {
 
             override fun onComplete() {
                 progressDialog?.value = false
+                Log.i("onComplete***", "onComplete")
             }
 
             override fun onError(e: Throwable) {
                 countryLiveData.value = null
                 progressDialog?.value = false
-                Log.e("onError", e.toString())
+                Log.i("onError***", e.toString())
             }
 
             override fun onNext(t: CountryModel) {
                 countryLiveData.value = t
-                Log.e("onNext", t.toString())
+                Log.i("onNext***", t.toString())
             }
 
             override fun onSubscribe(d: Disposable) {
+                Log.i("onSubscribe***", "onSubscribe")
                 progressDialog?.value = true
             }
         }
